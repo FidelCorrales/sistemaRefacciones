@@ -22,6 +22,17 @@ class Autopartes_m extends CI_Model {
 			return null;
 		}
 	}
+
+	public function obtenerAutoparteSuspension(){
+		$sql = "SELECT * FROM Autoparte WHERE FK_TIPO_AUTOPARTES = '1' AND ROWNUM <=5";
+		$execute = $this->db->query($sql);
+		if($execute->num_rows()>0){
+			$execute = $execute->result_array();
+			return $execute;
+		}else{
+			return null;
+		}
+	}
 }
 
 ?>

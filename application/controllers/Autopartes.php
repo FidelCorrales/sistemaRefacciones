@@ -25,6 +25,14 @@ class Autopartes extends CI_Controller{
 
     //Suspencion
     public function dame_aut_int(){
+        $autoparte_suspension = $this->autopartes_m->obtenerAutoparteSuspension();
+        if (!empty($autoparte_suspension)){
+            echo '<pre>';
+            print_r($autoparte_suspension);
+            echo '</pre>';    
+        }else{
+            echo "No se encontraron autopartes de suspensión";
+        }  
 
     }
 
