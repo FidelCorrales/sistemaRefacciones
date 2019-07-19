@@ -13,7 +13,7 @@ class Autopartes extends CI_Controller{
     public function index(){
 
         //$this->load->model('Autopartes_model');
-        $this->load->view('principal.html');
+        $this->load->view('principal');
     }
 
     /////////////////Tipos/////////////////
