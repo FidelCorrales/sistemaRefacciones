@@ -1,10 +1,18 @@
 <?php 
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Autopartes extends CI_Controller{
+
+    function __construct()
+    {
+        parent::__construct();
+        $this->load->model('autopartes_m');
+        # code...
+    }
     
     public function index(){
 
-        $this->load->model('Autopartes_model');
+        //$this->load->model('Autopartes_model');
         $this->load->view('principal.html');
     }
 
@@ -52,6 +60,18 @@ class Autopartes extends CI_Controller{
         
 
         return null;
+    }
+
+    public function login(){
+        //$form_data = $this->input->post();
+        $correo = $this->input->post("correo");
+        $contraseña = md5($this->input->post("contraseña"));
+        $login = $this->autopartes_m->prueba($correo, $contraseña);
+        if ($login>0){
+            print_r($login);    
+        }else{
+            echo "No se encontro el Usuario";
+        }  
     }
 
 }

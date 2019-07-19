@@ -63,6 +63,14 @@
     
             </div>
         </div>
+
+       
+                <form action="http://localhost/sistemaRefacciones/index.php/Autopartes/login" method="post">
+                    <input type="text" name="correo" placeholder="Correo"><br>
+                    <input type="password" name="contraseña" placeholder="Contraseña"><br>
+                    <input type="submit" value="Iniciar Sesión">
+                </form>
+
     
 
     <script>
@@ -83,6 +91,10 @@
                 $('nav').toggleClass('activate')
             })
         })
+
+        function prueba() {
+            alert('Hola mundo');
+        }
     </script>
 </body>
 </html>
