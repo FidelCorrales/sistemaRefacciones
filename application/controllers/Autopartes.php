@@ -7,7 +7,6 @@ class Autopartes extends CI_Controller{
     {
         parent::__construct();
         $this->load->model('autopartes_m');
-        # code...
     }
     
     public function index(){
@@ -33,7 +32,6 @@ class Autopartes extends CI_Controller{
         }else{
             echo "No se encontraron autopartes de suspensión";
         }  
-
     }
 
     //Partes externas motor
