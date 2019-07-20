@@ -11,7 +11,7 @@ class Autopartes extends CI_Controller{
     }
     
     public function index(){
-        $this->load->view('principal',$data);
+        $this->load->view('principal');
     }
 
     //---CRUD---//
@@ -77,17 +77,20 @@ class Autopartes extends CI_Controller{
 
     //---Suspension---//
     public function dame_suspencion(){
+        $categoria = $this->input->post('clave');
         $autoparte_suspension = $this->autopartes_m->obtenerAutoparteSuspension();
         if (!empty($autoparte_suspension)){
             // echo '<pre>';
             // print_r($autoparte_suspension);
             // echo '</pre>';   
             $data['suspension'] = $autoparte_suspension;
-            $this->load->view('principal.html',$data);
+            //$this->load->view('principal',"Hola");
+            //$array = array('uno','dos','tres');
+            echo json_encode($data);
             
         }else{
              echo "No se encontraron autopartes de suspensión";
-        }  
+        }
     }
 
     //---Partes externas motor---//
@@ -138,7 +141,7 @@ class Autopartes extends CI_Controller{
         }else{
             $msjError; 
             $msjError = "No se encontraron accesorios";
-            return $msjError;
+            //return $msjError;
         } 
     }
 
@@ -165,7 +168,7 @@ class Autopartes extends CI_Controller{
             print_r($login);    
         }else{
             echo "No se encontro el Usuario";
-        }  
+        } 
     }
 
 }
