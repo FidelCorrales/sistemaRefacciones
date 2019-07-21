@@ -10,7 +10,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <!-- Compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <title>Refaccionaria UAM</title>
 
@@ -27,11 +26,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
             <div class="nav-content">
             <ul class="tabs tabs-transparent">
-                <li class="tab" onclick="prueba('suspension');"><a href="#categoria">Suspensiones</a></li>
-                <li class="tab" onclick="prueba('frenos');"><a class="active" href="#test2">Frenos</a></li>
-                <li class="tab" onclick="prueba('motor');"><a href="#categoria">Partes externas motor</a></li>
-                <li class="tab" onclick="prueba('herramienta');"><a class="active" href="#test2">Herramienta</a></li>
-                <li class="tab" onclick="prueba('accesorios');"><a href="#test4">Accesorios</a></li>
+                <li class="tab"><a href="http://localhost/sistemaRefacciones/index.php/Autopartes/dame_suspencion">Suspensiones</a></li>
+                <li class="tab"><a class="active" href="http://localhost/sistemaRefacciones/index.php/Autopartes/dame_frenos">Frenos</a></li>
+                <li class="tab"><a href="http://localhost/sistemaRefacciones/index.php/Autopartes/dame_aut_ext">Partes externas motor</a></li>
+                <li class="tab"><a class="active" href="http://localhost/sistemaRefacciones/index.php/Autopartes/dame_herramienta">Herramienta</a></li>
+                <li class="tab"><a href="http://localhost/sistemaRefacciones/index.php/Autopartes/dame_accesorios">Accesorios</a></li>
             </ul>
         </div>
     </nav>
@@ -45,27 +44,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <div class="container">
         <div class="row">
-            <?php for($i=0; $i<6; $i++){?>
+            <?php for($i=0; $i<count($categoria); $i++){?>
         
                 <?php echo'
-    <div class="col s12 m3">
-      <div class="card">
-        <div class="card-image">
-          <img class="materialboxed" width="100" src="http://mride.com.mx/img/product/rotula.png">
-        </div>
-        <div class="card-content">
-        <h5>Importado</h5>
-          <p>Amortiguadores-Traseros</p><br>
-          <p>Compatibilidad: Aveo,Sonic,Vento</p>
-          <p>$321.26</p>
-        </div>
-        <div class="card-action">
-          <a href="#">This is a link</a>
-        </div>
-      </div>
-    </div>
-  ';?>
+                        <div class="col s12 m4">
+                            <div class="card">
+                                <div class="card-image">
+                                    <img class="materialboxed" width="60" src="http://mride.com.mx/img/product/rotula.png">
+                                </div>
+                                <div class="card-content">
+                                    <h5>'.$categoria[$i]["MARCA"].'</h5>
+                                    <a id="identificador'.$i.'">'.$categoria[$i]["ID_AUTOPARTE"].'</a>
+                                    <p>'.$categoria[$i]["DESCRIPCION"].'</p>
+                                    <p>'.$categoria[$i]["COMPATIBILIDAD"].'</p>
+                                    <a>$ MNX: '.$categoria[$i]["PRECIO"].' </a>
+                                </div>
+                                <div class="card-action">
+                                <form name="producto"> 
+                                    <label> 
+                                    <input id="'.$i.'" name="valor" type="text" value=1> 
+                                    </label> 
+                                </form>  
+                                <a class="btn-floating" onclick="incrementar('.$i.');"><i class="material-icons">add</i></a>
+                                <a class="btn-floating" onclick="decrementar('.$i.');"><i class="material-icons">remove</i></a>
+                                <a class="btn right" onclick="agregar_al_carrito('.$i.');"><i class="large material-icons">shopping_cart</i>Agregar</a>
+                                </div>
+                            </div>
+                        </div>
+                        ';?>
              <?php }?>
+        
+            
         </div>
     </div>
 
@@ -81,50 +90,70 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.materialboxed');
-    var instances = M.Materialbox.init(elems, {});
-  });
-
-  // Or with jQuery
-  $(document).ready(function(){
-    $('.materialboxed').materialbox();
-  });
-
-function prueba(categoria) {
-    $.ajax({
-        type:"POST",
-        url: "http://localhost/sistemaRefacciones/index.php/Autopartes/dame_suspencion",
-        data: {'clave': categoria},
-        dataType : 'json',
-        beforeSend : function() {
-             console.log("Procesando....");
-        },
-        success: function(response){
-            console.log(response);
-            
-        },
-        complete: function(){
-      
-        }
+        var elems = document.querySelectorAll('.materialboxed');
+        var instances = M.Materialbox.init(elems, {});
     });
-}   
+
+    function prueba(categoria){
+        var url = 'http://localhost/sistemaRefacciones/index.php/Autopartes/'+categoria;
+        $.ajax({
+            type:"POST",
+            url: url,
+            data: {'clave': categoria},
+            dataType : 'json',
+            beforeSend : function() {
+                 console.log("Procesando....");
+            },
+            success: function(response){
+                console.log(response);   
+            },
+            complete: function(){
+            }
+        });
+    }
+
+    function incrementar(valor){
+        var can = document.getElementById(valor);
+        if (can.value<=9)can.value ++;
+        if (can.value >= 10) {
+            alert('Maxima cantidad del mismo alcanzado 10')
+        }
+        //console.log(can);
+    }
+    function decrementar(valor){
+        var can = document.getElementById(valor);
+        if (can.value == 1){
+            alert("Minimo  cantidad permitido: 1")
+        }else{
+            can.value--;
+        }
+    } 
+
+    var carrito = [];
+
+    function agregar_al_carrito(i) {
+        var identificador = 'identificador' + i;
+        var id_articulo = document.getElementById(identificador).text;
+        var cantidad = document.getElementById(i).value;
+        carrito.push({
+            'id_articulo' : id_articulo,
+            'cantidad' : cantidad
+        });
+        console.log(carrito);
+    }
+
+    function ver_carrito() {
+            var ajax = new XMLHttpRequest();
+            ajax.onreadystatechange = function() {
+                if (ajax.readyState == 4 && ajax.status == 200) {
+                    var response = ajax.responseText;
+                }
+            };
+            ajax.open("POST", URL, true);
+            ajax.setRequestHeader("Content-type", "application/json");
+            ajax.send(carrito);
+            
+        }
 </script>
 </body>
-
-<script  type="text/javascript">
-/*document.addEventListener('DOMContentLoaded', function() {
-var elems = document.querySelectorAll('.fixed-action-btn');
-var instances = M.FloatingActionButton.init(elems, options);
-});
-
-$(document).ready(function(){
-$('.fixed-action-btn').floatingActionButton();
-});*/ 
-
-
-/**/
-
-
-
-</script>
 </html>
