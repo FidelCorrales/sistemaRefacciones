@@ -11,7 +11,7 @@ class Autopartes extends CI_Controller{
     }
     
     public function index(){
-        $this->load->view('principal',$data);
+        $this->load->view('principal');
     }
 
     //---CRUD---//
@@ -40,17 +40,50 @@ class Autopartes extends CI_Controller{
         $autopartes = $this->autopartes_m->leerAutopartes();
         if(!empty($autopartes)){
             $data['autopartes'] = $autopartes;
-            $this->load->view('principal.html',$data);
+            $this->load->view('principal',$data);
         }else{
             $msjResult = "No se logro leer en la base de datos, intenté de nuevo.";
             return $msjResult;
         }
     }
 
+    //leer por id
+    public function leer_autoparte($id){
+        if(!is_null($id)){
+            $autoparte = $this->autopartes_m->leerAutopartes($id);
+            if(!empty($autoparte)){
+                $data['autoparteid'] = $autoparte;
+                $this->load->view('principal',$data);
+            }else{
+                $msjResult = "No se logro leer en la base de datos, intenté de nuevo.";
+                return $msjResult;
+            }
+        }else{
+            $msjResult = "Ingresar un Id valido.";
+            return $msjResult;
+        }
+    }
+
+    //leer por nombre
+    public function leer_autoparte_nombre($nombre){
+        if(!is_null($nombre)){
+            $autoparte = $this->autopartes_m->leerAutopartesNombre();
+            if(!empty($autoparte)){
+                $data['autopartenombre'] = $autoparte;
+                $this->load->view('principal',$data);
+            }else{
+                $msjResult = "No se logro leer en la base de datos, intenté de nuevo.";
+                return $msjResult;
+            }
+        }else{
+            $msjResult = "Ingresar un nombre valido.";
+            return $msjResult;
+        }
+    }
+
     //Actualizar
-    public function actualizar_suspencion(){
-        $actualizacion = $this->autopartes_m->actualizarAutoparte();
-        $msjResult;
+    public function actualizar_suspencion($id){
+        $actualizacion = $this->autopartes_m->actualizarAutoparte($id);
         if(!empty($actualizacion)){
             $msjResult = "Se logro actualizar la autoparte.";
             return $msjResult;
@@ -61,7 +94,7 @@ class Autopartes extends CI_Controller{
     }
 
     //Eliminar 
-    public function eliminar_autoparte(){
+    public function eliminar_autoparte($id){
         $confirmacion = $this->autopartes_m->eliminarAutoparte($id);
         if(!is_null($confirmacion)){
             return $confirmacion;
@@ -73,6 +106,25 @@ class Autopartes extends CI_Controller{
     }
     //---FIN CRUD---//
 
+    //--Existencias--//
+    public function existencias($id){
+        if(!is_null($id)){
+            $numExistencias = $this->autopartes_m->existencias($id);
+            if( !empty($numExistencias) ){
+                $data['existencias'] = $numExistencias;
+                $this->load->view('principal',$data);
+            }
+            else{
+                $msjResult = "Intente de nuevo.";
+                return $msjResult;
+            }
+        }else{
+            $msjResult = "Ingresar un id valido.";
+            return $msjResult;
+        }
+    }
+    //--Fin existencias--//
+
     /////////////////Categorias/////////////////
 
     //---Suspension---//
@@ -83,10 +135,12 @@ class Autopartes extends CI_Controller{
             // print_r($autoparte_suspension);
             // echo '</pre>';   
             $data['suspension'] = $autoparte_suspension;
-            $this->load->view('principal.html',$data);
+            $this->load->view('principal',$data);
             
         }else{
-             echo "No se encontraron autopartes de suspensión";
+            //echo "No se encontraron autopartes de suspensión";
+            $msjError = "No se encontraron autopartes externas de motor";
+            return $msjError;
         }  
     }
 
@@ -95,9 +149,8 @@ class Autopartes extends CI_Controller{
         $autoparte_ext = $this->autopartes_m->obtenerAutoparteExt();
         if (!empty($autoparte_ext)){   
             $data['extmotor'] = $autoparte_ext;
-            $this->load->view('principal.html',$data);
+            $this->load->view('principal',$data);
         }else{
-            $msjError; 
             $msjError = "No se encontraron autopartes externas de motor";
             return $msjError;
         }  
@@ -108,9 +161,8 @@ class Autopartes extends CI_Controller{
         $autoparte_freno = $this->autopartes_m->obtenerFrenos();
         if (!empty($autoparte_freno)){   
             $data['frenos'] = $autoparte_freno;
-            $this->load->view('principal.html',$data);
+            $this->load->view('principal',$data);
         }else{
-            $msjError; 
             $msjError = "No se encontraron frenos";
             return $msjError;
         } 
@@ -121,9 +173,8 @@ class Autopartes extends CI_Controller{
         $autoparte_herram = $this->autopartes_m->obtenerHerramientas();
         if (!empty($autoparte_herram)){   
             $data['herramientas'] = $autoparte_herram;
-            $this->load->view('principal.html',$data);
+            $this->load->view('principal',$data);
         }else{
-            $msjError; 
             $msjError = "No se encontraron herramientas";
             return $msjError;
         } 
@@ -134,41 +185,12 @@ class Autopartes extends CI_Controller{
         $autoparte_acce = $this->autopartes_m->obtenerAccesorios();
         if (!empty($autoparte_acce)){   
             $data['accesorios'] = $autoparte_acce;
-            $this->load->view('principal.html',$data);
+            $this->load->view('principal',$data);
         }else{
-            $msjError; 
             $msjError = "No se encontraron accesorios";
             return $msjError;
         } 
     }
 
-    /////////////////Autoparte/////////////////
-    public function dame_autoparte($id){
-
-        if(!$id) {
-            //error 
-        }
-
-        $articulo = $this->refac_model->get($id);
-
-        
-
-        return null;
-    }
-
-    public function login(){
-        //$form_data = $this->input->post();
-        $correo = $this->input->post("correo");
-        $contraseña = md5($this->input->post("contraseña"));
-        $login = $this->autopartes_m->prueba($correo, $contraseña);
-        if ($login>0){
-            print_r($login);    
-        }else{
-            echo "No se encontro el Usuario";
-        }  
-    }
-
 }
-
-
 ?>
