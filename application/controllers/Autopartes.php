@@ -24,7 +24,7 @@ class Autopartes extends CI_Controller{
 
     //---CRUD---//
     //Crear
-    public function insertar_autoparte(){
+    /*public function insertar_autoparte(){
         
         $marca = $_POST['marca'];
         $costo = $_POST['costo'];
@@ -139,19 +139,17 @@ class Autopartes extends CI_Controller{
     public function dame_suspencion(){
         $categoria = $this->input->post('clave');
         $autoparte_suspension = $this->autopartes_m->obtenerAutoparteSuspension();
-<<<<<<< HEAD
+
         if (!empty($autoparte_suspension)){ 
             $data['categoria'] = $autoparte_suspension;
             $this->load->view('principal',$data);
-=======
+
         if (!empty($autoparte_suspension)){
             // echo '<pre>';
             // print_r($autoparte_suspension);
             // echo '</pre>';   
             $data['suspension'] = $autoparte_suspension;
             $this->load->view('principal',$data);
-            
->>>>>>> da551f77360b8e3921df01b6989305aee33bf9c2
         }else{
             //echo "No se encontraron autopartes de suspensión";
             $msjError = "No se encontraron autopartes externas de motor";
@@ -163,11 +161,11 @@ class Autopartes extends CI_Controller{
     public function dame_aut_ext(){
         $autoparte_ext = $this->autopartes_m->obtenerAutoparteExt();
         if (!empty($autoparte_ext)){   
-<<<<<<< HEAD
+
             $data['categoria'] = $autoparte_ext;
-=======
+
             $data['extmotor'] = $autoparte_ext;
->>>>>>> da551f77360b8e3921df01b6989305aee33bf9c2
+
             $this->load->view('principal',$data);
         }else{
             $msjError = "No se encontraron autopartes externas de motor";
@@ -178,20 +176,20 @@ class Autopartes extends CI_Controller{
     //---Frenos---//
     public function dame_frenos(){
         $autoparte_freno = $this->autopartes_m->obtenerFrenos();
-<<<<<<< HEAD
+
         if (!empty($autoparte_freno)){    
             $data['categoria'] = $autoparte_freno;
             $this->load->view('principal',$data);
         }else{
              echo "No se encontraron autopartes de frenos";
-=======
+
         if (!empty($autoparte_freno)){   
             $data['frenos'] = $autoparte_freno;
             $this->load->view('principal',$data);
         }else{
             $msjError = "No se encontraron frenos";
             return $msjError;
->>>>>>> da551f77360b8e3921df01b6989305aee33bf9c2
+
         } 
     }
 
@@ -199,18 +197,17 @@ class Autopartes extends CI_Controller{
     public function dame_herramienta(){
         $autoparte_herram = $this->autopartes_m->obtenerHerramientas();
         if (!empty($autoparte_herram)){   
-<<<<<<< HEAD
-            $data['categoria'] = $autoparte_herram;
+       $data['categoria'] = $autoparte_herram;
             $this->load->view('principal',$data);
         }else{
            echo "No se encontraron autopartes herramienta";
-=======
+
             $data['herramientas'] = $autoparte_herram;
             $this->load->view('principal',$data);
         }else{
             $msjError = "No se encontraron herramientas";
             return $msjError;
->>>>>>> da551f77360b8e3921df01b6989305aee33bf9c2
+
         } 
     }
 
@@ -218,20 +215,20 @@ class Autopartes extends CI_Controller{
     public function dame_accesorios(){
         $autoparte_acce = $this->autopartes_m->obtenerAccesorios();
         if (!empty($autoparte_acce)){   
-<<<<<<< HEAD
+
             $data['categoria'] = $autoparte_acce;
             $this->load->view('principal',$data);
         }else{
             echo "No se encontraron autopartes de accesorios";
-=======
+
             $data['accesorios'] = $autoparte_acce;
             $this->load->view('principal',$data);
         }else{
             $msjError = "No se encontraron accesorios";
             //return $msjError;
->>>>>>> da551f77360b8e3921df01b6989305aee33bf9c2
+
         } 
-    }
+    }*/
 
 }
 ?>
