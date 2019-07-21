@@ -129,6 +129,7 @@ class Autopartes extends CI_Controller{
 
     //---Suspension---//
     public function dame_suspencion(){
+        $categoria = $this->input->post('clave');
         $autoparte_suspension = $this->autopartes_m->obtenerAutoparteSuspension();
         if (!empty($autoparte_suspension)){
             // echo '<pre>';
@@ -188,7 +189,7 @@ class Autopartes extends CI_Controller{
             $this->load->view('principal',$data);
         }else{
             $msjError = "No se encontraron accesorios";
-            return $msjError;
+            //return $msjError;
         } 
     }
 

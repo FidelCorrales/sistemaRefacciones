@@ -7,10 +7,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <meta charset="utf-8">
 <!-- Compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <!-- Compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <title>Refaccionaria UAM</title>
 
 <body style="background-color:#212121">
@@ -26,11 +27,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
             <div class="nav-content">
             <ul class="tabs tabs-transparent">
-                <li class="tab"><a href="#categoria">Suspenciones</a></li>
-                <li class="tab"><a class="active" href="#test2">Frenos</a></li>
-                <li class="tab"><a href="#categoria">Partes externas motor</a></li>
-                <li class="tab"><a class="active" href="#test2">Herramienta</a></li>
-                <li class="tab"><a href="#test4">Accesorios</a></li>
+                <li class="tab" onclick="prueba('suspension');"><a href="#categoria">Suspensiones</a></li>
+                <li class="tab" onclick="prueba('frenos');"><a class="active" href="#test2">Frenos</a></li>
+                <li class="tab" onclick="prueba('motor');"><a href="#categoria">Partes externas motor</a></li>
+                <li class="tab" onclick="prueba('herramienta');"><a class="active" href="#test2">Herramienta</a></li>
+                <li class="tab" onclick="prueba('accesorios');"><a href="#test4">Accesorios</a></li>
             </ul>
         </div>
     </nav>
@@ -43,22 +44,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
     <div class="container">
-        <div id="categoria" class="row">
+        <div class="row">
             <?php for($i=0; $i<6; $i++){?>
         
-                <?php echo'<div class="col s6 m4">
-                  <div class="card blue-grey darken-1">
-                    <div class="card-content white-text">
-                      <span class="card-title">Card Title</span>
-                      <p>I am a very simple card. I am good at containing small bits of information.
-                      I am convenient because I require little markup to use effectively.</p>
-                    </div>
-                    <div class="card-action">
-                      <a href="#">This is a link</a>
-                      <a href="#">This is a link</a>
-                    </div>
-                  </div>
-                </div>';?>
+                <?php echo'
+    <div class="col s12 m3">
+      <div class="card">
+        <div class="card-image">
+          <img class="materialboxed" width="100" src="http://mride.com.mx/img/product/rotula.png">
+        </div>
+        <div class="card-content">
+        <h5>Importado</h5>
+          <p>Amortiguadores-Traseros</p><br>
+          <p>Compatibilidad: Aveo,Sonic,Vento</p>
+          <p>$321.26</p>
+        </div>
+        <div class="card-action">
+          <a href="#">This is a link</a>
+        </div>
+      </div>
+    </div>
+  ';?>
              <?php }?>
         </div>
     </div>
@@ -73,20 +79,52 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </ul>
     </div>
 
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.materialboxed');
+    var instances = M.Materialbox.init(elems, {});
+  });
 
+  // Or with jQuery
+  $(document).ready(function(){
+    $('.materialboxed').materialbox();
+  });
+
+function prueba(categoria) {
+    $.ajax({
+        type:"POST",
+        url: "http://localhost/sistemaRefacciones/index.php/Autopartes/dame_suspencion",
+        data: {'clave': categoria},
+        dataType : 'json',
+        beforeSend : function() {
+             console.log("Procesando....");
+        },
+        success: function(response){
+            console.log(response);
+            
+        },
+        complete: function(){
+      
+        }
+    });
+}   
+</script>
 </body>
 
-<script type="text/javascript">
-document.addEventListener('DOMContentLoaded', function() {
+<script  type="text/javascript">
+/*document.addEventListener('DOMContentLoaded', function() {
 var elems = document.querySelectorAll('.fixed-action-btn');
 var instances = M.FloatingActionButton.init(elems, options);
 });
 
-// Or with jQuery
-
 $(document).ready(function(){
 $('.fixed-action-btn').floatingActionButton();
-});
+});*/ 
+
+
+/**/
+
+
 
 </script>
 </html>
