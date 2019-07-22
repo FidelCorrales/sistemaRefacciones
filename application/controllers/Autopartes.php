@@ -25,22 +25,82 @@ class Autopartes extends CI_Controller{
     //---CRUD---//
     //Crear
     public function insertar_autoparte(){
-        
-        $marca = $_POST['marca'];
-        $costo = $_POST['precio'];
-        $descripcion = $_POST['descripcion'];
-        $compatibilidad = $_POST['compatibilidad'];
-        $tipo = $_POST['tipo'];
-        $unidad = $_POST['unidad'];
-
-        //$confirmacion = $this->autopartes_m->nuevaAutoparte($marca,$costo,$descripcion,$compatibilidad,$tipo,$unidad);
+        $producto = $this->input->post('arreglo');
+        switch ($producto[0]['categoria']) {
+            case 'Frenos':
+                $producto[0]['categoria'] = 1;
+                $categoria = $producto[0]['categoria'];
+                $consulta = $this->autopartes_m->obtenerId($categoria);
+                $id = $consulta[0]['ID_AUTOPARTE'] +1;
+                $confirmacion = $this->autopartes_m->nuevaAutoparte($id, $producto);
+                if (!empty($confirmacion)) {
+                    echo "Autoparte guardada correctamente";
+                }else{
+                    echo "No se pudo guardar la nueva autoparte";
+                }
+                break;
+            case 'Suspensión':
+                $producto[0]['categoria'] = 2;
+                $categoria = $producto[0]['categoria'];
+                $consulta = $this->autopartes_m->obtenerId($categoria);
+                $id = $consulta[0]['ID_AUTOPARTE'] +1;
+                $confirmacion = $this->autopartes_m->nuevaAutoparte($id, $producto);
+                if (!empty($confirmacion)) {
+                    echo "Autoparte guardada correctamente";
+                }else{
+                    echo "No se pudo guardar la nueva autoparte";
+                }
+                break;
+            case 'Parte externa motor':
+                $producto[0]['categoria'] = 3;
+                $categoria = $producto[0]['categoria'];
+                $consulta = $this->autopartes_m->obtenerId($categoria);
+                $id = $consulta[0]['ID_AUTOPARTE'] +1;
+                $confirmacion = $this->autopartes_m->nuevaAutoparte($id, $producto);
+                if (!empty($confirmacion)) {
+                    echo "Autoparte guardada correctamente";
+                }else{
+                    echo "No se pudo guardar la nueva autoparte";
+                }
+                break;
+            case 'Herramienta':
+                $producto[0]['categoria'] = 4;
+                $categoria = $producto[0]['categoria'];
+                $consulta = $this->autopartes_m->obtenerId($categoria);
+                $id = $consulta[0]['ID_AUTOPARTE'] +1;
+                $confirmacion = $this->autopartes_m->nuevaAutoparte($id, $producto);
+                if (!empty($confirmacion)) {
+                    echo "Autoparte guardada correctamente";
+                }else{
+                    echo "No se pudo guardar la nueva autoparte";
+                }
+                break;
+            case 'Accesorios':
+                $producto[0]['categoria'] = 5;
+                $categoria = $producto[0]['categoria'];
+                $consulta = $this->autopartes_m->obtenerId($categoria);
+                $id = $consulta[0]['ID_AUTOPARTE'] +1;
+                $confirmacion = $this->autopartes_m->nuevaAutoparte($id, $producto);
+                if (!empty($confirmacion)) {
+                    echo "Autoparte guardada correctamente";
+                }else{
+                    echo "No se pudo guardar la nueva autoparte";
+                }
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+    
+        /*$confirmacion = $this->autopartes_m->nuevaAutoparte($producto);
         if(!is_null($confirmacion)){
             $this->load->view('principal');
         }
         else{
             $msjError = "No se logro guardar en la base de datos, intenté de nuevo.";
             return $msjError;
-        }
+        }*/
     }
 
     //leer

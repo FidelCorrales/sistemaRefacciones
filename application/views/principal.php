@@ -90,9 +90,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="modal-content">
     <h4>Nueva Autoparte</h4>
     <p>A continuación podras registrar una nueva autoparte en nuestro inventario</p>
-    <form action="http://localhost/sistemaRefacciones/index.php/Autopartes/insertar_autoparte" method="post">
+    <form>
     <a>Marca:</a><input id="in_marca" type="text" name="marca" class="validate" style="width: 200px;"><a>Material:</a><input id="in_material" type="text" name="material" class="validate" style="width: 200px;"><a>Disponibilidad:</a><input id="in_dispo" type="text" name="disponibilidad" class="validate" style="width: 200px;"><a>No.Modelo:</a><input id="in_modelo" type="text" name="modelo" class="validate" style="width: 200px;"><a>Precio:</a><input id="in_precio" type="text" name="precio" class="validate" style="width: 200px;"><a>Descripción:</a><input id="in_descripcion"  name="descripcion" type="text" class="validate" style="width: 200px;"><a>Compatibilidad:</a><input id="in_compa" type="text" name="compatibilidad" class="validate" style="width: 200px;">
-    <a>Tipo de Autoparte:<input list="browsers" style="width: 300px;">
+    <a>Tipo de Autoparte:<input id="in_categoria" list="browsers" style="width: 300px;">
     <datalist id="browsers">
     <option value="Frenos">
     <option value="Suspensión">
@@ -100,7 +100,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <option value="Herramienta">
     <option value="Accesorios">
     </datalist></p>
-    <button class="btn waves-effect waves-light" type="submit" name="action">Guardar nueva Autoparte
+    <button class="btn waves-effect waves-light" type="submit" name="action" onclick="guardar_autoparte();">Guardar nueva Autoparte
     <i class="material-icons right">save</i>
     </button>
     </form>
@@ -226,6 +226,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 },
                 success: function(response){
                     $('body').html(response);  
+                    //console.log(response); 
+                },
+                complete: function(){
+                }
+            });
+    }
+
+    function guardar_autoparte(){
+        var marca           = document.getElementById('in_marca').value;
+        var material        = document.getElementById('in_material').value;
+        var disponibilidad  = document.getElementById('in_dispo').value;
+        var modelo          = document.getElementById('in_modelo').value;         
+        var precio          = document.getElementById('in_precio').value;
+        var descripcion     = document.getElementById('in_descripcion').value;
+        var compatibilidad  = document.getElementById('in_compa').value;
+        var categoria       = document.getElementById('in_categoria').value;
+        var nueva_autoparte = [];
+        nueva_autoparte.push({'marca':marca,'material':material,'disponibilidad':disponibilidad,'modelo':modelo,'precio':precio,'descripcion':descripcion,'compatibilidad':compatibilidad,'categoria':categoria});
+        $.ajax({
+                type:"POST",
+                url: "http://localhost/sistemaRefacciones/index.php/Autopartes/insertar_autoparte",
+                data: {'arreglo': nueva_autoparte},
+                beforeSend : function() {
+                     console.log("Procesando....");
+                },
+                success: function(response){
+                    alert(response);
                     //console.log(response); 
                 },
                 complete: function(){
