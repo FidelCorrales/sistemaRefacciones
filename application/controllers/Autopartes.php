@@ -24,18 +24,18 @@ class Autopartes extends CI_Controller{
 
     //---CRUD---//
     //Crear
-    /*public function insertar_autoparte(){
+    public function insertar_autoparte(){
         
         $marca = $_POST['marca'];
-        $costo = $_POST['costo'];
+        $costo = $_POST['precio'];
         $descripcion = $_POST['descripcion'];
         $compatibilidad = $_POST['compatibilidad'];
         $tipo = $_POST['tipo'];
         $unidad = $_POST['unidad'];
 
-        $confirmacion = $this->autopartes_m->nuevaAutoparte($marca,$costo,$descripcion,$compatibilidad,$tipo,$unidad);
+        //$confirmacion = $this->autopartes_m->nuevaAutoparte($marca,$costo,$descripcion,$compatibilidad,$tipo,$unidad);
         if(!is_null($confirmacion)){
-            return $confirmacion;
+            $this->load->view('principal');
         }
         else{
             $msjError = "No se logro guardar en la base de datos, intenté de nuevo.";
@@ -44,7 +44,7 @@ class Autopartes extends CI_Controller{
     }
 
     //leer
-    public function leer_autopartes(){
+    /*public function leer_autopartes(){
         $autopartes = $this->autopartes_m->leerAutopartes();
         if(!empty($autopartes)){
             $data['autopartes'] = $autopartes;

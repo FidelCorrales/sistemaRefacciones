@@ -75,6 +75,17 @@ class Autopartes_m extends CI_Model {
 		}
 	}
 
+	public function nuevaAutoparte($producto){
+		$sql = "SELECT * FROM Autoparte where UPPER(descripcion) like UPPER('%$producto%')";
+		$execute = $this->db->query($sql);
+		if($execute->num_rows()>0){
+			$execute = $execute->result_array();
+			return $execute;
+		}else{
+			return null;
+		}
+	}
+
 
 
 }

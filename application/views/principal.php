@@ -20,9 +20,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><input id="busqueda_producto" type="text" placeholder="Buscar artículo.." style="background-color:white; border-radius:5px; width:400px; text-align:center;"><a id="buscar_producto" class="btn-floating" onclick="buscar();"><i class="material-icons">search</i></a></li>
-                <li><a href="sass.html">Nueva Autoparte</a></li>
                 <li><a href="badges.html">Existencia</a></li>
                 <li><a href="collapsible.html">Usuario</a></li>
+                <li><a class="waves-effect waves-light btn modal-trigger" href="#modal1">Nueva Autoparte</a></li>
                
             </ul>
             </div>
@@ -84,6 +84,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <a class="btn-floating btn-large red" onclick="ver_carrito();"><i class="large material-icons">shopping_cart</i></a>
     </div>
 
+   
+
+    <div id="modal1" class="modal bottom-sheet">
+    <div class="modal-content">
+    <h4>Nueva Autoparte</h4>
+    <p>A continuación podras registrar una nueva autoparte en nuestro inventario</p>
+    <form action="http://localhost/sistemaRefacciones/index.php/Autopartes/insertar_autoparte" method="post">
+    <a>Marca:</a><input id="in_marca" type="text" name="marca" class="validate" style="width: 200px;"><a>Material:</a><input id="in_material" type="text" name="material" class="validate" style="width: 200px;"><a>Disponibilidad:</a><input id="in_dispo" type="text" name="disponibilidad" class="validate" style="width: 200px;"><a>No.Modelo:</a><input id="in_modelo" type="text" name="modelo" class="validate" style="width: 200px;"><a>Precio:</a><input id="in_precio" type="text" name="precio" class="validate" style="width: 200px;"><a>Descripción:</a><input id="in_descripcion"  name="descripcion" type="text" class="validate" style="width: 200px;"><a>Compatibilidad:</a><input id="in_compa" type="text" name="compatibilidad" class="validate" style="width: 200px;">
+    <a>Tipo de Autoparte:<input list="browsers" style="width: 300px;">
+    <datalist id="browsers">
+    <option value="Frenos">
+    <option value="Suspensión">
+    <option value="Parte externa motor">
+    <option value="Herramienta">
+    <option value="Accesorios">
+    </datalist></p>
+    <button class="btn waves-effect waves-light" type="submit" name="action">Guardar nueva Autoparte
+    <i class="material-icons right">save</i>
+    </button>
+    </form>
+    </div>
+    </div>
+
+          
+          
+
     <footer class="page-footer" style="background-color:#4527A0">
         <div class="container">
             <div class="row">
@@ -116,6 +142,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         var instances = M.Materialbox.init(elems, {});
     });
 
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems, {});
+  });
+
+
+
+     
     function incrementar(valor){
         var can = document.getElementById(valor);
         if (can.value<=9)can.value ++;
