@@ -70,27 +70,26 @@ class Autopartes extends CI_Controller{
             $msjResult = "Ingresar un Id valido.";
             return $msjResult;
         }
-    }
+    }*/
 
     //leer por nombre
-    public function leer_autoparte_nombre($nombre){
-        if(!is_null($nombre)){
-            $autoparte = $this->autopartes_m->leerAutopartesNombre();
-            if(!empty($autoparte)){
-                $data['autopartenombre'] = $autoparte;
-                $this->load->view('principal',$data);
-            }else{
-                $msjResult = "No se logro leer en la base de datos, intenté de nuevo.";
-                return $msjResult;
-            }
+    public function leer_autoparte_nombre(){
+        $busqueda =  $this->input->post('busqueda');
+        $producto =  strtok($busqueda, " ");
+        $autoparte = $this->autopartes_m->leerAutopartesNombre($producto);
+        if(!empty($autoparte)){
+            $data['productos'] = $autoparte;
+            $response = $this->load->view('busqueda',$data,TRUE);
+            echo $response;
         }else{
-            $msjResult = "Ingresar un nombre valido.";
-            return $msjResult;
+            $msjResult = "No se logro obtener producto relacionado,intentelo de nuevo.";
+            
         }
+        
     }
 
     //Actualizar
-    public function actualizar_suspencion($id){
+    /*public function actualizar_suspencion($id){
         $actualizacion = $this->autopartes_m->actualizarAutoparte($id);
         if(!empty($actualizacion)){
             $msjResult = "Se logro actualizar la autoparte.";
@@ -198,7 +197,7 @@ class Autopartes extends CI_Controller{
         if (!empty($carrito)) {
            $response = $this->load->view('carrito',$carrito,TRUE);
            echo $response;
-        }
+        }   
     }
 
 }

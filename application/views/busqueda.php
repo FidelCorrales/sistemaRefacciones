@@ -42,47 +42,45 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <li><a href="badges.html">Components</a></li>
         <li><a href="collapsible.html">JavaScript</a></li>
     </ul>
-
-
     <div class="container">
-        <div class="row">
-            <?php for($i=0; $i<count($categoria); $i++){?>
-        
-                <?php echo'
-                        <div class="col s12 m6 l4">
-                            <div class="card">
-                                <div class="card-image">
-                                    <img class="materialboxed" width="60" src="http://mride.com.mx/img/product/rotula.png">
-                                </div>
-                                <div class="card-content">
-                                    <h5>'.$categoria[$i]["MARCA"].'</h5>
-                                    <a id="identificador'.$i.'">'.$categoria[$i]["ID_AUTOPARTE"].'</a>
-                                    <p id="descripcion'.$i.'">'.$categoria[$i]["DESCRIPCION"].'</p>
-                                    <p>'.$categoria[$i]["COMPATIBILIDAD"].'</p>
-                                    $ MNX: <a id="precio'.$i.'">'.$categoria[$i]["PRECIO"].'.00</a>
-                                </div>
-                                <div class="card-action">
-                                <form name="producto"> 
-                                    <label> 
-                                    <input id="'.$i.'" name="valor" type="text" value=1> 
-                                    </label> 
-                                </form>  
-                                <a class="btn-floating" onclick="incrementar('.$i.');"><i class="material-icons">add</i></a>
-                                <a class="btn-floating" onclick="decrementar('.$i.');"><i class="material-icons">remove</i></a>
-                                <a class="btn right" onclick="agregar_al_carrito('.$i.');"><i class="large material-icons">shopping_cart</i>Agregar</a>
-                                </div>
+        <?php for($i=0; $i<count($productos); $i++){?>
+            <?php echo'
+                    <div class="col s12 m7">
+                        <div class="card horizontal">
+                            <div class="card-image">
+                            <img src="https://images-na.ssl-images-amazon.com/images/I/81wEGDqQRYL._SX425_.jpg" width="200px" height="250px">
+                            </div>
+                            <div class="card-stacked">
+                            <div class="card-content">
+                            <h5 id="descripcion'.$i.'">'.$productos[$i]['DESCRIPCION'].'</h5>
+                            <a id="identificador'.$i.'">'.$productos[$i]['ID_AUTOPARTE'].'</a>
+                            <br>
+                            <h6>Material: '.$productos[$i]['MATERIAL'].'</h6>
+                            <h6>Compatibilidad: '.$productos[$i]['COMPATIBILIDAD'].'</h6>
+                            <h6>Precio: $MXN <a id="precio'.$i.'">'.$productos[$i]['PRECIO'].'</<a></h6>
+                            </div>
+                            <div class="card-action">
+                            <form name="producto">
+                                 <label> 
+                                <input id="'.$i.'" name="valor" type="text" value=1 style="width:400px;"> 
+                                </label> 
+                            </form>  
+                            <a class="btn-floating" onclick="incrementar('.$i.');"><i class="material-icons">add</i></a>
+                            <a class="btn-floating" onclick="decrementar('.$i.');"><i class="material-icons">remove</i></a>
+                            <a class="btn right" onclick="agregar_al_carrito('.$i.');"><i class="large material-icons">shopping_cart</i>Agregar</a>
+                            </div>
                             </div>
                         </div>
-                        ';?>
-             <?php }?>
-        
-            
-        </div>
-    </div>
+                    </div>
+                    ';?>
+        <?php }?>         
+    </div>  
 
     <div class="fixed-action-btn">
         <a class="btn-floating btn-large red" onclick="ver_carrito();"><i class="large material-icons">shopping_cart</i></a>
-    </div>
+    </div>  
+
+    
 
     <footer class="page-footer" style="background-color:#4527A0">
         <div class="container">
@@ -111,7 +109,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </footer>
 
 <script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function() {
+     document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('.materialboxed');
         var instances = M.Materialbox.init(elems, {});
     });
@@ -174,30 +172,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         }
         
     }
-    var input_producto = document.getElementById('busqueda_producto');
-    input_producto.addEventListener("keyup",function(event) {
-        if (event.keyCode === 13){
-            event.preventDefault();
-            document.getElementById("buscar_producto").click();
-        }
-    });
-    function buscar() {
-        var producto = document.getElementById('busqueda_producto').value;
-         $.ajax({
-                type:"POST",
-                url: "http://localhost/sistemaRefacciones/index.php/Autopartes/leer_autoparte_nombre",
-                data: {'busqueda': producto},
-                beforeSend : function() {
-                     console.log("Procesando....");
-                },
-                success: function(response){
-                    $('body').html(response);  
-                    //console.log(response); 
-                },
-                complete: function(){
-                }
-            });
-    }
+
 </script>
 </body>
 </html>
