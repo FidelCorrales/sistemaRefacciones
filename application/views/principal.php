@@ -55,9 +55,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="card-content">
                                     <h5>'.$categoria[$i]["MARCA"].'</h5>
                                     <a id="identificador'.$i.'">'.$categoria[$i]["ID_AUTOPARTE"].'</a>
-                                    <p>'.$categoria[$i]["DESCRIPCION"].'</p>
+                                    <p id="descripcion'.$i.'">'.$categoria[$i]["DESCRIPCION"].'</p>
                                     <p>'.$categoria[$i]["COMPATIBILIDAD"].'</p>
-                                    <a>$ MNX: '.$categoria[$i]["PRECIO"].' </a>
+                                    $ MNX: <a id="precio'.$i.'">'.$categoria[$i]["PRECIO"].'.00</a>
                                 </div>
                                 <div class="card-action">
                                 <form name="producto"> 
@@ -79,21 +79,40 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 
     <div class="fixed-action-btn">
-        <a class="btn-floating btn-large red"><i class="large material-icons">shopping_cart</i></a>
-        <ul>
-            <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
-            <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-            <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-            <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
-        </ul>
+        <a class="btn-floating btn-large red" onclick="ver_carrito();"><i class="large material-icons">shopping_cart</i></a>
     </div>
+
+    <footer class="page-footer" style="background-color:#4527A0">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">Refaccionaria UAM-Iztapalapa</h5>
+                    <p class="grey-text text-lighten-4">Tu mejor opción para reparar tu automovil.</p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                </ul>
+                </div>
+                </div>
+                </div>
+                <div class="footer-copyright">
+                <div class="container">
+                © 2019 Copyright Text
+                <a class="grey-text text-lighten-4 right" href="#!">Universidad Autonoma Metropolitana</a>
+            </div>
+        </div>
+    </footer>
 
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('.materialboxed');
         var instances = M.Materialbox.init(elems, {});
     });
-
 
     function incrementar(valor){
         var can = document.getElementById(valor);
@@ -115,27 +134,43 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     var carrito = [];
 
     function agregar_al_carrito(i) {
-        var identificador = 'identificador' + i;
+        var identificador = 'identificador'+i;
+        var descripcion = 'descripcion'+i;
+        var precio = 'precio'+i;
         var id_articulo = document.getElementById(identificador).text;
+        var des = document.getElementById(descripcion).innerHTML;
+        var preciou = document.getElementById(precio).text;
         var cantidad = document.getElementById(i).value;
         carrito.push({
             'id_articulo' : id_articulo,
+            'descripcion':des,
+            'precio':preciou,
             'cantidad' : cantidad
         });
-        console.log(carrito);
+        alert("Producto agregado al carrito");
     }
 
-    function ver_carrito() {
-        var ajax = new XMLHttpRequest();
-        ajax.onreadystatechange = function() {
-        if (ajax.readyState == 4 && ajax.status == 200) {
-        var response = ajax.responseText;
+    function ver_carrito(){
+
+        if (carrito.length == 0){
+            alert('Tu carrito de compras está vacío.');
+        }else{
+            var url = 'http://localhost/sistemaRefacciones/index.php/Autopartes/ver_carrito';
+            $.ajax({
+                type:"POST",
+                url: url,
+                data: {'carrito': carrito},
+                beforeSend : function() {
+                     console.log("Procesando....");
+                },
+                success: function(response){
+                    $('body').html(response);   
+                },
+                complete: function(){
+                }
+            });
         }
-        };
-        ajax.open("POST", URL, true);
-        ajax.setRequestHeader("Content-type", "application/json");
-        ajax.send(carrito);
-            
+        
     }
 </script>
 </body>

@@ -193,5 +193,13 @@ class Autopartes extends CI_Controller{
         } 
     }
 
+    public function ver_carrito(){
+        $carrito['articulos'] = $this->input->post('carrito');
+        if (!empty($carrito)) {
+           $response = $this->load->view('carrito',$carrito,TRUE);
+           echo $response;
+        }
+    }
+
 }
 ?>
