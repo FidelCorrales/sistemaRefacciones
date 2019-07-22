@@ -94,23 +94,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         var instances = M.Materialbox.init(elems, {});
     });
 
-    function prueba(categoria){
-        var url = 'http://localhost/sistemaRefacciones/index.php/Autopartes/'+categoria;
-        $.ajax({
-            type:"POST",
-            url: url,
-            data: {'clave': categoria},
-            dataType : 'json',
-            beforeSend : function() {
-                 console.log("Procesando....");
-            },
-            success: function(response){
-                console.log(response);   
-            },
-            complete: function(){
-            }
-        });
-    }
 
     function incrementar(valor){
         var can = document.getElementById(valor);
@@ -143,17 +126,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
 
     function ver_carrito() {
-            var ajax = new XMLHttpRequest();
-            ajax.onreadystatechange = function() {
-                if (ajax.readyState == 4 && ajax.status == 200) {
-                    var response = ajax.responseText;
-                }
-            };
-            ajax.open("POST", URL, true);
-            ajax.setRequestHeader("Content-type", "application/json");
-            ajax.send(carrito);
-            
+        var ajax = new XMLHttpRequest();
+        ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+        var response = ajax.responseText;
         }
+        };
+        ajax.open("POST", URL, true);
+        ajax.setRequestHeader("Content-type", "application/json");
+        ajax.send(carrito);
+            
+    }
 </script>
 </body>
 </html>
