@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Title -->
-    <title>Login | Refaccionaria ACEROS</title>
+    <title>Login | Refaccionaria UAM</title>
 
     <!-- Favicon icono de la pestaña-->
     <link rel="icon" href=<?php echo base_url('assets/img/llanta.png')?>>
@@ -41,13 +41,13 @@
 
             <div id="Titulo" class="container">
                 <div class="row">
-                    <h3 id="titulo">¡Bienvenido a la Refaccionaria ACERO!</h3>
+                    <h3 id="titulo">¡Bienvenido a la Refaccionaria UAM Iztapalapa!</h3>
                     <p id="mensaje">La mejor calidad para viajar seguro.</p>
                 </div>
             </div>
 
             <!-- Login Form -->
-            <form action="usuarios/login" method="POST">
+            <form action="<?php echo site_url('usuarios/login') ?>" method="POST">
                 <input type="text" id="login" class="fadeIn second" name="login" placeholder="Correo electrónico">
                 <input type="text" id="password" class="fadeIn third" name="password" placeholder="Contraseña">
                 <input  class="fadeIn fourth" value="Iniciar sesión" type="submit">

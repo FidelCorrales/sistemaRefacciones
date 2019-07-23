@@ -6,6 +6,8 @@ class Usuarios extends CI_Controller{
         parent::__construct();
         $this->load->helper('url');
         $this->load->model('usuarios_m');
+        $this->load->database();
+        $this->load->model('autopartes_m');
     }
 
     public function index(){
@@ -17,10 +19,16 @@ class Usuarios extends CI_Controller{
         //$form_data = $this->input->post();
         $correo = $this->input->post("login");
         $contraseña = md5($this->input->post("password"));
-        $login = $this->usuarios_m->login($correo, $contraseña);
-        if ($login>0){
-            $this->load->view('principal',$login);
-            //print_r($login);    
+        $data['user'] = $this->usuarios_m->login($correo, $contraseña);
+        if ($data['user']>0){
+            $autoparte_suspension = $this->autopartes_m->obtenerAutoparteSuspension();
+            if (!empty($autoparte_suspension)){
+                $data['categoria'] = $autoparte_suspension;
+                $this->load->view('principal',$data);
+                //print_r($login);    
+            }else{
+                echo "No se encontraron autopartes de suspensión";
+           }
         }else{
             //echo "No se encontro el Usuario";
             $msjError = "No se encontro una cuenta con ese correo, intenté de nuevo.";
